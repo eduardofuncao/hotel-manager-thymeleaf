@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Hotel List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Hotel List</h1>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>Hotel Name</th>
+            <th>Address</th>
+            <th>Available Rooms</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Iterate over the list of hotels -->
+        <tr th:each="hotel : ${hotels}">
+            <td th:text="${hotel.name}">Hotel Name</td>
+            <td th:text="${hotel.address}">Hotel Address</td>
+            <td th:text="${hotel.getNumberOfRooms()}">Available Rooms</td>
+            <td>
+                <!-- Link to view hotel details -->
+                <a th:href="@{/hotels/{id}/details(id=${hotel.id})}" class="btn btn-info">Details</a>
+                <a th:href="@{/hotels/{id}/edit(id=${hotel.id})}" class="btn btn-info">Edit</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Button to register a new hotel -->
+    <a th:href="@{/hotels/new}" class="btn btn-primary">Register New Hotel</a>
+</div>
+</body>
+</html>

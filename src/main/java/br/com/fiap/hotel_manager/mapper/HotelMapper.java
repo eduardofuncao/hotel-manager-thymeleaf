@@ -2,15 +2,35 @@ package br.com.fiap.hotel_manager.mapper;
 
 import br.com.fiap.hotel_manager.controller.dto.HotelDTO;
 import br.com.fiap.hotel_manager.entity.Hotel;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
-//TODO create a custom mapper
-@Mapper(componentModel = "spring")
-public interface HotelMapper {
-    HotelMapper INSTANCE = Mappers.getMapper(HotelMapper.class);
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
-    HotelDTO toDTO(Hotel hotel);
+@Component
+public class HotelMapper {
 
-    Hotel toEntity(HotelDTO dto);
+    RoomMapper roomMapper = new RoomMapper();
+
+    public HotelDTO toDTO(Hotel hotel) {
+        HotelDTO dto = new HotelDTO();
+        dto.setId(hotel.getId());
+        dto.setName(hotel.getName());
+        dto.setAddress(hotel.getAddress());
+        dto.setPhone(hotel.getPhone());
+        dto.setRooms(hotel.getRooms().stream()
+                .map(roomMapper::toDTO)
+                .collect(Collectors.toList()));
+        return dto;
+    }
+
+    public Hotel toEntity(HotelDTO dto) {
+        Hotel hotel = new Hotel();
+        hotel.setId(dto.getId());
+        hotel.setName(dto.getName());
+        hotel.setAddress(dto.getAddress());
+        hotel.setPhone(dto.getPhone());
+        return hotel;
+    }
 }

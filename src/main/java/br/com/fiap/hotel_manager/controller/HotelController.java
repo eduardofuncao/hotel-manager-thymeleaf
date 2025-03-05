@@ -2,13 +2,14 @@ package br.com.fiap.hotel_manager.controller.dto;
 
 import br.com.fiap.hotel_manager.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/hotels")
+@RequestMapping("api/hotels")
 public class HotelController {
     private HotelService hotelService;
 
@@ -39,5 +40,11 @@ public class HotelController {
         existingHotel.setAddress(hotelDTO.getAddress());
         existingHotel.setPhone(hotelDTO.getPhone());
         return ResponseEntity.ok(hotelService.saveHotel(existingHotel));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteHotel(@PathVariable Long id) {
+        hotelService.deleteHotelById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
