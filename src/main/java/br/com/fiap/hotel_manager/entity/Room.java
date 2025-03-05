@@ -14,6 +14,8 @@ public class Room {
     private Long id;
 
     private int roomNumber;
+    private String type;
+    private double price;
 
     @OneToMany
     private List<Reservation> reservations;

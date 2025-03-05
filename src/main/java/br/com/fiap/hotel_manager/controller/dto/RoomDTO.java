@@ -12,5 +12,8 @@ public class RoomDTO {
     private Long id;
 
     private int roomNumber;
+    private String type;
+    private double price;
+
     private Long hotelId;
 }
