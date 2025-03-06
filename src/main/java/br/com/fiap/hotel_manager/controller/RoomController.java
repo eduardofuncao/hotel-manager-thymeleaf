@@ -1,5 +1,6 @@
-package br.com.fiap.hotel_manager.controller.dto;
+package br.com.fiap.hotel_manager.controller;
 
+import br.com.fiap.hotel_manager.controller.dto.RoomDTO;
 import br.com.fiap.hotel_manager.service.RoomService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

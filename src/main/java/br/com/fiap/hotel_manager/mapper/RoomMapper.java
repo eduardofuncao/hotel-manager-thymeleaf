@@ -4,8 +4,12 @@ import br.com.fiap.hotel_manager.controller.dto.RoomDTO;
 import br.com.fiap.hotel_manager.entity.Room;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 public class RoomMapper {
+
+    private final ReservationMapper reservationMapper = new ReservationMapper();
 
     public RoomDTO toDTO(Room room) {
         RoomDTO dto = new RoomDTO();
@@ -14,7 +18,13 @@ public class RoomMapper {
         dto.setType(room.getType());
         dto.setPrice(room.getPrice());
         dto.setHotelId(room.getHotel().getId());
-        return dto;
+        if (room.getReservations()!=null) {
+            dto.setReservations(room.getReservations().stream()
+                    .map(reservationMapper::toDTO)
+                    .collect(Collectors.toList()));
+        }
+            return dto;
+
     }
 
     public Room toEntity(RoomDTO roomDTO) {

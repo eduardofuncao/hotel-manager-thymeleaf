@@ -14,14 +14,19 @@ import java.util.stream.Collectors;
 public class RoomService {
     private final RoomMapper roomMapper;
     private final RoomRepository roomRepository;
+    private final HotelRepository hotelRepository;
 
-    public RoomService(RoomMapper roomMapper, RoomRepository roomRepository) {
+    public RoomService(RoomMapper roomMapper, RoomRepository roomRepository, HotelRepository hotelRepository) {
         this.roomMapper = roomMapper;
         this.roomRepository = roomRepository;
+        this.hotelRepository = hotelRepository;
     }
 
     public RoomDTO saveRoom(RoomDTO roomDTO) {
-        Room savedRoom = roomRepository.save(roomMapper.toEntity(roomDTO));
+        Room roomToSave = roomMapper.toEntity(roomDTO);
+        roomToSave.setHotel(hotelRepository.findById(roomDTO.getHotelId())
+                .orElseThrow(() -> new RuntimeException("id de hotel não encontrado")));
+        Room savedRoom = roomRepository.save(roomToSave);
         roomDTO.setId(savedRoom.getId());
         return roomDTO;
     }

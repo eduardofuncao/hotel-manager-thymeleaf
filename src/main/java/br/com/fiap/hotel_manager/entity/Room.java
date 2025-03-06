@@ -17,7 +17,7 @@ public class Room {
     private String type;
     private double price;
 
-    @OneToMany
+    @OneToMany(mappedBy = "room")
     private List<Reservation> reservations;
 
     @ManyToOne

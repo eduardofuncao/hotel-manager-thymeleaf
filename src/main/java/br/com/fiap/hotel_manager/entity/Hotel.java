@@ -16,6 +16,6 @@ public class Hotel {
     private String address;
     private String phone;
 
-    @OneToMany
+    @OneToMany(mappedBy = "hotel")
     private List<Room> rooms;
 }

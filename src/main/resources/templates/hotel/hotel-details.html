@@ -15,9 +15,32 @@
     <p th:text="${hotel.phone}"></p>
 
     <h2>Available Rooms</h2>
-    <p th:text="${hotel.rooms}"></p>
 
-    <a th:href="@{/rooms/new}" class="btn btn-primary">Add new room</a>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>Room Number</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Next Booking</th>
+            <th>Book room</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="room : ${hotel.rooms}">
+            <td th:text="${room.roomNumber}">Room Number</td>
+            <td th:text="${room.type}">Type</td>
+            <td th:text="${room.price}">Price</td>
+            <td th:text="${room.getNextReservation()?.checkinDate}">Next Reservation</td>
+            <td>
+                <a th:href="@{/reservations/new/roomid/{id}(id=${room.id})}" class="btn btn-info">Book room</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/rooms/new/hotelid/{id}(id=${hotel.id})}" class="btn btn-primary">Add new room</a>
+    <a th:href="@{/home}">Home</a>
 </div>
 </body>
 </html>

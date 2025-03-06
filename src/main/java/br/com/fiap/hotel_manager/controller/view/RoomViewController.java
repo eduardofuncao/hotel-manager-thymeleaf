@@ -5,10 +5,7 @@ import br.com.fiap.hotel_manager.controller.dto.RoomDTO;
 import br.com.fiap.hotel_manager.service.RoomService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/rooms")
@@ -21,15 +18,17 @@ public class RoomViewController {
         this.roomService = roomService;
     }
 
-    @GetMapping("/new")
-    public String newRoom(Model model) {
-        model.addAttribute("room", new RoomDTO());
+    @GetMapping("/new/hotelid/{id}")
+    public String newRoom(@PathVariable Long id, Model model) {
+        RoomDTO roomDTOtoAdd = new RoomDTO();
+        roomDTOtoAdd.setHotelId(id);
+        model.addAttribute("room", roomDTOtoAdd);
         return "room/room-form";
     }
 
     @PostMapping("/new")
     public String submitForm(@ModelAttribute("room") RoomDTO roomDTO) {
         roomService.saveRoom(roomDTO);
-        return "redirect:/hotels/" + roomDTO.getId() + "/details";
+        return "redirect:/hotels/" + roomDTO.getHotelId() + "/details";
     }
 }

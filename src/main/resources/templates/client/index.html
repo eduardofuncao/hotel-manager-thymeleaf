@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Client List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Client List</h2>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>Client Id</th>
+            <th>Client Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="client : ${clients}">
+            <td th:text="${client.id}">Reservation Id</td>
+            <td th:text="${client.name}">Client</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/clients/new}" class="btn btn-primary">Register New Client</a>
+    <a th:href="@{/home}" class="btn btn-primary">Home</a>
+
+</div>
+</body>
+</html>
