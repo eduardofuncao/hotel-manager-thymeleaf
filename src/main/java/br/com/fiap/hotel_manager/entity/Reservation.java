@@ -15,8 +15,8 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime checkinDate;
-    private LocalDateTime checkoutDate;
+    private LocalDate checkinDate;
+    private LocalDate checkoutDate;
 
     @ManyToOne
     private Client client;

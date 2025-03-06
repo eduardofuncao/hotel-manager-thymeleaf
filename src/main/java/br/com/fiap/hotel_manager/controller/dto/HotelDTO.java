@@ -14,10 +14,12 @@ public class HotelDTO {
     private String phone;
     private List<RoomDTO> rooms;
 
-    public Integer getNumberOfRooms() {
-        if (rooms == null) {
-            return 0;
+    public Integer getNumberOfAvailabeRooms() {
+        int availableRooms = 0;
+        for (RoomDTO room : rooms) {
+            if (room.isRoomAvailableNow())
+                availableRooms += 1;
         }
-        return this.rooms.size();
+        return availableRooms;
     }
 }

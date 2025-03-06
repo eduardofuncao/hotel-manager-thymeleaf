@@ -1,6 +1,7 @@
 package br.com.fiap.hotel_manager.service;
 
 import br.com.fiap.hotel_manager.controller.dto.ReservationDTO;
+import br.com.fiap.hotel_manager.controller.dto.ReservationFullDetailsDTO;
 import br.com.fiap.hotel_manager.entity.Reservation;
 import br.com.fiap.hotel_manager.mapper.ReservationMapper;
 import br.com.fiap.hotel_manager.repository.ClientRepository;
@@ -9,6 +10,7 @@ import br.com.fiap.hotel_manager.repository.ReservationRepository;
 import br.com.fiap.hotel_manager.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,6 +44,22 @@ public class ReservationService {
         return reservationRepository.findAll().stream()
                 .map(reservationMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    public List<ReservationFullDetailsDTO> getAllReservationsDetails() {
+        List<Reservation> reservations = reservationRepository.findAll();
+        return reservations.stream()
+                .map(reservation -> {
+                    ReservationFullDetailsDTO dto = new ReservationFullDetailsDTO();
+                    dto.setId(reservation.getId());
+                    dto.setCheckinDate(reservation.getCheckinDate());
+                    dto.setCheckoutDate(reservation.getCheckoutDate());
+                    dto.setClientName(reservation.getClient().getName());
+                    dto.setRoomNumber(reservation.getRoom().getRoomNumber());
+                    dto.setHotelName(reservation.getRoom().getHotel().getName());
+                    return dto;})
+                .collect(Collectors.toList());
+
     }
 
     public ReservationDTO getReservationById(Long id) {

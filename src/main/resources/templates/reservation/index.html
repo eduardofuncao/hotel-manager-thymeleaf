@@ -13,17 +13,19 @@
         <tr>
             <th>Reservation Id</th>
             <th>Client</th>
-            <th>Checkin Date</th>
-            <th>Checkout Date</th>
+            <th>Room Number</th>
+            <th>Hotel</th>
+            <th>Period</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="reservation : ${reservations}">
-            <td th:text="${reservation.id}">Reservation Id</td>
-            <td th:text="${reservation.clientId}">Client</td>
-            <td th:text="${reservation.checkinDate}">Checkin Date</td>
-            <td th:text="${reservation.checkoutDate}">Checkout Date</td>
+            <td th:text="${reservation.id}">Reservation ID</td>
+            <td th:text="${reservation.clientName}">Client</td>
+            <td th:text="${reservation.roomNumber}">Room Number</td>
+            <td th:text="${reservation.hotelName}">Hotel</td>
+            <td th:text="${reservation.checkinDate} + ' to ' + ${reservation.checkoutDate}">Period of Stay</td>
             <td>
                 <a th:href="@{/reservations/{id}/cancel(id=${reservation.id})}" class="btn btn-info">Cancel</a>
             </td>

@@ -2,27 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Reservation form</title>
+    <title>Reservation Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
 <body>
 <div class="container mt-5">
-    <div>Reservation Form</div>
+    <h1 class="mb-4">Reservation Form</h1>
     <form action="#" th:action="@{/reservations/new}" method="post" th:object="${reservation}">
-        <label>Checkin Date: </label>
-        <input type="datetime-local" th:field="*{checkinDate}" /><br/>
+        <div class="form-group">
+            <label for="checkinDate">Checkin Date:</label>
+            <input type="date" class="form-control" id="checkinDate" th:field="*{checkinDate}" />
+        </div>
 
-        <label>Checkout Date: </label>
-        <input type="datetime-local" th:field="*{checkoutDate}" /><br/>
+        <div class="form-group">
+            <label for="checkoutDate">Checkout Date:</label>
+            <input type="date" class="form-control" id="checkoutDate" th:field="*{checkoutDate}" />
+        </div>
 
-        <label>Client Id: </label>
-        <input type="text" th:field="*{clientId}" /><br/>
+        <div class="form-group">
+            <label for="clientId">Client ID:</label>
+            <select class="form-control" id="clientId" th:field="*{clientId}">
+                <option value="">-- Select a Client ID --</option>
+                <option th:each="client : ${clientIds}" th:value="${client}" th:text="${client}"></option>
+            </select>
+        </div>
 
-        <label>Room Id</label>
-        <input type="text" th:field="*{roomId}" readonly /><br/>
+        <div class="form-group">
+            <label for="roomId">Room ID:</label>
+            <input type="text" class="form-control" id="roomId" th:field="*{roomId}" readonly />
+        </div>
 
-        <button type="submit">Create Room</button>
+        <button type="submit" class="btn btn-primary">Create Reservation</button>
     </form>
-
 </div>
-
 </body>
 </html>

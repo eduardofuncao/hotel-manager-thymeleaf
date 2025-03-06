@@ -3,25 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Room Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
 <body>
 <div class="container mt-5">
-    <div>Room Form</div>
+    <h1 class="mb-4">Room Form</h1>
     <form action="#" th:action="@{/rooms/new}" method="post" th:object="${room}">
-        <label>Room number: </label>
-        <input type="text" th:field="*{roomNumber}" /><br/>
+        <div class="form-group">
+            <label for="roomNumber">Room Number:</label>
+            <input type="text" class="form-control" id="roomNumber" th:field="*{roomNumber}" placeholder="Enter room number" />
+        </div>
 
-        <label>Type: </label>
-        <input type="text" th:field="*{type}" /><br/>
+        <div class="form-group">
+            <label for="type">Type:</label>
+            <input type="text" class="form-control" id="type" th:field="*{type}" placeholder="Enter room type" />
+        </div>
 
-        <label>price: </label>
-        <input type="text" th:field="*{price}" /><br/>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="text" class="form-control" id="price" th:field="*{price}" placeholder="Enter room price" />
+        </div>
 
-        <label>hotel Id: </label>
-        <input type="text" th:field="*{hotelId}" readonly/><br/>
+        <div class="form-group">
+            <label for="hotelId">Hotel ID:</label>
+            <input type="text" class="form-control" id="hotelId" th:field="*{hotelId}" readonly />
+        </div>
 
-        <button type="submit">Create Room</button>
+        <button type="submit" class="btn btn-primary">Create Room</button>
     </form>
-
 </div>
 
 </body>

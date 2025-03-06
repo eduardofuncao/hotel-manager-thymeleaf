@@ -4,6 +4,7 @@ import br.com.fiap.hotel_manager.entity.Hotel;
 import br.com.fiap.hotel_manager.entity.Reservation;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,9 +25,9 @@ public class RoomDTO {
         if (reservations == null || reservations.isEmpty()) {
             return null;
         }
-        LocalDateTime minDate = reservations.stream()
+        LocalDate minDate = reservations.stream()
                 .map(ReservationDTO::getCheckinDate)
-                .min(LocalDateTime::compareTo)
+                .min(LocalDate::compareTo)
                 .get();
 
         return reservations.stream()
@@ -34,4 +35,16 @@ public class RoomDTO {
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("There is no next reservation"));
     }
+
+    public boolean isRoomAvailableNow() {
+        LocalDate today = LocalDate.now();
+        for (ReservationDTO reservation : reservations) {
+            if (!reservation.getCheckinDate().isAfter(today) && !reservation.getCheckoutDate().isBefore(today)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
 }

@@ -2,6 +2,7 @@ package br.com.fiap.hotel_manager.controller.view;
 
 import br.com.fiap.hotel_manager.controller.dto.ReservationDTO;
 import br.com.fiap.hotel_manager.controller.dto.RoomDTO;
+import br.com.fiap.hotel_manager.service.ClientService;
 import br.com.fiap.hotel_manager.service.ReservationService;
 import br.com.fiap.hotel_manager.service.RoomService;
 import org.springframework.stereotype.Controller;
@@ -14,16 +15,18 @@ public class ReservationViewController {
 
     private final ReservationService reservationService;
     private final RoomService roomService;
+    private final ClientService clientService;
 
-    public ReservationViewController(ReservationService reservationService, RoomService roomService) {
+    public ReservationViewController(ReservationService reservationService, RoomService roomService, ClientService clientService) {
         this.reservationService = reservationService;
         this.roomService = roomService;
+        this.clientService = clientService;
     }
 
     //TODO create reservationService.getAllReservationsDetails which returns a dto specifically to fill the reservations table
     @GetMapping
     public String reservations(Model model) {
-        model.addAttribute("reservations", reservationService.getAllReservations());
+        model.addAttribute("reservations", reservationService.getAllReservationsDetails());
         return "reservation/index";
     }
 
@@ -32,6 +35,7 @@ public class ReservationViewController {
         ReservationDTO reservationDTOtoAdd = new ReservationDTO();
         reservationDTOtoAdd.setRoomId(id);
         model.addAttribute("reservation", reservationDTOtoAdd);
+        model.addAttribute("clientIds", clientService.getAllClientIds());
         return "reservation/reservation-form";
     }
 

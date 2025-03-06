@@ -3,27 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Hotel Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container mt-5">
-    <h1 th:text="${hotel.name}">Hotel Name</h1>
-    <h2>Details</h2>
-    <h3 th:text="${hotel.id}">Hotel Id</h3>
-    <h3>Adress</h3>
-    <p th:text="${hotel.address}"></p>
-    <h3>Phone</h3>
-    <p th:text="${hotel.phone}"></p>
+    <h1 class="mb-4" th:text="${hotel.name}">Hotel Name</h1>
 
-    <h2>Available Rooms</h2>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Details</h2>
+            <h5 class="card-subtitle mb-2 text-muted" th:text="'Hotel ID: ' + ${hotel.id}">Hotel ID</h5>
+            <h5 class="card-text" th:text="'Address: ' + ${hotel.address}">Hotel Address</h5>
+            <h5 class="card-text" th:text="'Phone: '+ ${hotel.phone}">Hotel Phone</h5>
+        </div>
+    </div>
 
-    <table class="table table-bordered">
+    <h2 class="mb-4">Available Rooms</h2>
+    <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
             <th>Room Number</th>
             <th>Type</th>
             <th>Price</th>
             <th>Next Booking</th>
-            <th>Book room</th>
+            <th>Book Room</th>
         </tr>
         </thead>
         <tbody>
@@ -33,14 +36,17 @@
             <td th:text="${room.price}">Price</td>
             <td th:text="${room.getNextReservation()?.checkinDate}">Next Reservation</td>
             <td>
-                <a th:href="@{/reservations/new/roomid/{id}(id=${room.id})}" class="btn btn-info">Book room</a>
+                <a th:href="@{/reservations/new/roomid/{id}(id=${room.id})}" class="btn btn-info btn-sm">Book Room</a>
             </td>
         </tr>
         </tbody>
     </table>
 
-    <a th:href="@{/rooms/new/hotelid/{id}(id=${hotel.id})}" class="btn btn-primary">Add new room</a>
-    <a th:href="@{/home}">Home</a>
+    <div class="mt-4">
+        <a th:href="@{/rooms/new/hotelid/{id}(id=${hotel.id})}" class="btn btn-primary">Add New Room</a>
+        <a th:href="@{/home}" class="btn btn-secondary ml-2">Home</a>
+    </div>
 </div>
+
 </body>
 </html>

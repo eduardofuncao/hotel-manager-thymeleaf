@@ -46,4 +46,8 @@ public class ClientService {
                 .orElseThrow(() -> new RuntimeException("Client not found"));
         clientRepository.delete(clientToDelete);
     }
+
+    public List<Long> getAllClientIds() {
+        return clientRepository.findAll().stream().map(Client::getId).collect(Collectors.toList());
+    }
 }

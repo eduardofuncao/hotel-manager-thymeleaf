@@ -21,7 +21,7 @@
         <tr th:each="hotel : ${hotels}">
             <td th:text="${hotel.name}">Hotel Name</td>
             <td th:text="${hotel.address}">Hotel Address</td>
-            <td th:text="${hotel.getNumberOfRooms()}">Available Rooms</td>
+            <td th:text="${hotel.getNumberOfAvailabeRooms()}">Available Rooms</td>
             <td>
                 <a th:href="@{/hotels/{id}/details(id=${hotel.id})}" class="btn btn-info">Details</a>
                 <a th:href="@{/hotels/{id}/edit(id=${hotel.id})}" class="btn btn-info">Edit</a>

@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Client Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
 <body>
 <div class="container mt-5">
-    <div>Client Form</div>
+    <h1 class="mb-4">Client Form</h1>
     <form action="#" th:action="@{/clients/new}" method="post" th:object="${client}">
-        <label>Client Name</label>
-        <input type="text" th:field="*{name}" /><br/>
+        <div class="form-group">
+            <label for="name">Client Name:</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter client name" />
+        </div>
 
-        <button type="submit">Create Client</button>
+        <button type="submit" class="btn btn-primary">Create Client</button>
     </form>
-
 </div>
-
 </body>
 </html>
