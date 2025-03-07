@@ -1,5 +1,6 @@
 package br.com.fiap.hotel_manager.controller.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.util.List;
@@ -9,8 +10,11 @@ import java.util.List;
 public class HotelDTO {
     private Long id;
 
+    @NotBlank(message = "name is mandatory")
     private String name;
+    @NotBlank(message = "address is mandatory")
     private String address;
+    @NotBlank(message = "phone is mandatory")
     private String phone;
     private List<RoomDTO> rooms;
 

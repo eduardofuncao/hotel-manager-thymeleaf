@@ -4,6 +4,7 @@ import br.com.fiap.hotel_manager.controller.dto.ClientDTO;
 import br.com.fiap.hotel_manager.controller.dto.ReservationDTO;
 import br.com.fiap.hotel_manager.controller.dto.RoomDTO;
 import br.com.fiap.hotel_manager.service.ClientService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class ClientViewController {
     }
 
     @PostMapping("/new")
-    public String submitForm(@ModelAttribute("client") ClientDTO clientDTO) {
+    public String submitForm(@ModelAttribute("client") @Valid ClientDTO clientDTO) {
         clientService.saveClient(clientDTO);
         return "redirect:/clients";
     }

@@ -5,6 +5,7 @@ import br.com.fiap.hotel_manager.controller.dto.RoomDTO;
 import br.com.fiap.hotel_manager.service.ClientService;
 import br.com.fiap.hotel_manager.service.ReservationService;
 import br.com.fiap.hotel_manager.service.RoomService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,6 @@ public class ReservationViewController {
         this.clientService = clientService;
     }
 
-    //TODO create reservationService.getAllReservationsDetails which returns a dto specifically to fill the reservations table
     @GetMapping
     public String reservations(Model model) {
         model.addAttribute("reservations", reservationService.getAllReservationsDetails());
@@ -40,7 +40,7 @@ public class ReservationViewController {
     }
 
     @PostMapping("/new")
-    public String submitForm(@ModelAttribute("reservation") ReservationDTO reservationDTO) {
+    public String submitForm(@ModelAttribute("reservation") @Valid ReservationDTO reservationDTO) {
         reservationService.saveReservation(reservationDTO);
         RoomDTO roomDTO = roomService.getRoomById(reservationDTO.getRoomId());
         return "redirect:/hotels/" + roomDTO.getHotelId() + "/details";

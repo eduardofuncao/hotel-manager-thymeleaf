@@ -1,11 +1,10 @@
 package br.com.fiap.hotel_manager.controller.dto;
 
-import br.com.fiap.hotel_manager.entity.Hotel;
-import br.com.fiap.hotel_manager.entity.Reservation;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -13,10 +12,13 @@ public class RoomDTO {
 
     private Long id;
 
+    @NotNull(message = "room number is mandatory")
     private int roomNumber;
     private String type;
+    @NotNull(message = "price is mandatory")
     private double price;
 
+    @NotNull(message = "hotel id is mandatory")
     private Long hotelId;
     private List<ReservationDTO> reservations;
 
@@ -25,15 +27,20 @@ public class RoomDTO {
         if (reservations == null || reservations.isEmpty()) {
             return null;
         }
-        LocalDate minDate = reservations.stream()
+        List<ReservationDTO> filteredReservations = reservations.stream()
+                .filter(reservationDTO -> reservationDTO.getCheckinDate().isAfter(LocalDate.now()))
+                .toList();
+
+        LocalDate minDate = filteredReservations.stream()
                 .map(ReservationDTO::getCheckinDate)
                 .min(LocalDate::compareTo)
-                .get();
+                .orElse(LocalDate.now());
+
 
         return reservations.stream()
                 .filter(reservation -> reservation.getCheckinDate().equals(minDate))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("There is no next reservation"));
+                .orElse(null);
     }
 
     public boolean isRoomAvailableNow() {

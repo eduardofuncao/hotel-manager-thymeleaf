@@ -13,5 +13,4 @@ public class ReservationFullDetailsDTO {
     private String clientName;
     private int roomNumber;
     private String hotelName;
-
 }

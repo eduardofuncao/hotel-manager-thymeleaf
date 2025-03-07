@@ -3,6 +3,8 @@ package br.com.fiap.hotel_manager.service;
 import br.com.fiap.hotel_manager.controller.dto.ReservationDTO;
 import br.com.fiap.hotel_manager.controller.dto.ReservationFullDetailsDTO;
 import br.com.fiap.hotel_manager.entity.Reservation;
+import br.com.fiap.hotel_manager.entity.Room;
+import br.com.fiap.hotel_manager.exception.RoomAlreadyBookedException;
 import br.com.fiap.hotel_manager.mapper.ReservationMapper;
 import br.com.fiap.hotel_manager.repository.ClientRepository;
 import br.com.fiap.hotel_manager.repository.HotelRepository;
@@ -30,11 +32,24 @@ public class ReservationService {
 
     public ReservationDTO saveReservation(ReservationDTO reservationDTO) {
         Reservation reservationToSave = reservationMapper.toEntity(reservationDTO);
-        reservationToSave.setRoom(roomRepository.findById(reservationDTO.getRoomId())
-                .orElseThrow(() -> new RuntimeException("id de quarto não encontrado")));
+
+        Room roomToBook = roomRepository.findById(reservationDTO.getRoomId())
+                .orElseThrow(() -> new RuntimeException("Room not found"));
+
+        List<Reservation> currentReservations = roomToBook.getReservations();
+        for (Reservation reservation : currentReservations) {
+            if (reservationDTO.getCheckinDate().isAfter(reservation.getCheckinDate().minusDays(1))
+                    && reservationDTO.getCheckinDate().isBefore(reservation.getCheckoutDate().plusDays(1))
+                || reservationDTO.getCheckoutDate().isAfter(reservation.getCheckinDate().minusDays(1))
+                    && reservationDTO.getCheckinDate().isBefore(reservation.getCheckoutDate().plusDays(1))) {
+                throw new RoomAlreadyBookedException("Room already booked for this period");
+            }
+        }
+        reservationToSave.setRoom(roomToBook);
+
         reservationToSave.setClient(clientRepository.findById(reservationDTO.getClientId())
                 .orElseThrow(() -> new RuntimeException(("id de cliente não encontrado"))));
-        System.out.println(reservationToSave.getClient().getId());
+
         Reservation savedReservation = reservationRepository.save(reservationToSave);
         reservationDTO.setId(savedReservation.getId());
         return reservationDTO;

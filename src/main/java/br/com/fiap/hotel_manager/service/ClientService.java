@@ -5,6 +5,7 @@ import br.com.fiap.hotel_manager.entity.Client;
 import br.com.fiap.hotel_manager.mapper.ClientMapper;
 import br.com.fiap.hotel_manager.repository.HotelRepository;
 import br.com.fiap.hotel_manager.repository.ClientRepository;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

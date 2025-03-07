@@ -26,6 +26,7 @@
             <th>Type</th>
             <th>Price</th>
             <th>Next Booking</th>
+            <th>Is Room Available now</th>
             <th>Book Room</th>
         </tr>
         </thead>
@@ -35,6 +36,8 @@
             <td th:text="${room.type}">Type</td>
             <td th:text="${room.price}">Price</td>
             <td th:text="${room.getNextReservation()?.checkinDate}">Next Reservation</td>
+            <td th:if="${room.isRoomAvailableNow()}">Available</td>
+            <td th:unless="${room.isRoomAvailableNow()}">Not Available</td>
             <td>
                 <a th:href="@{/reservations/new/roomid/{id}(id=${room.id})}" class="btn btn-info btn-sm">Book Room</a>
             </td>

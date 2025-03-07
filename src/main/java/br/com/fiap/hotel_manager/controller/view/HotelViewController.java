@@ -2,6 +2,7 @@ package br.com.fiap.hotel_manager.controller.view;
 
 import br.com.fiap.hotel_manager.controller.dto.HotelDTO;
 import br.com.fiap.hotel_manager.service.HotelService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class HotelViewController {
     }
 
     @PostMapping("/register")
-    public String submitForm(@ModelAttribute("hotel") HotelDTO hotelDTO) {
+    public String submitForm(@ModelAttribute("hotel") @Valid HotelDTO hotelDTO) {
         hotelService.saveHotel(hotelDTO);
         return "redirect:/home";
     }
@@ -34,7 +35,7 @@ public class HotelViewController {
         return "hotel/hotel-edit";
     }
     @PostMapping("/{id}/edit")
-    public String updateHotel(@PathVariable Long id, @ModelAttribute("hotel") HotelDTO hotelDTO, Model model) {
+    public String updateHotel(@PathVariable Long id, @ModelAttribute("hotel") @Valid HotelDTO hotelDTO, Model model) {
         hotelService.saveHotel(hotelDTO);
         return "redirect:/home";
     }
